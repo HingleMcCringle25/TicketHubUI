@@ -28,7 +28,7 @@ function PaymentForm() {
     console.log("Submitting Payment Data:", purchaseData);
 
     try {
-      const response = await fetch("YOUR_AZURE_FUNCTION_API_ENDPOINT_URL", {
+      const response = await fetch("https://nscc-0476765-api-inft4000-eea4agdsath4dae6.canadacentral-01.azurewebsites.net/api/Ticket", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
