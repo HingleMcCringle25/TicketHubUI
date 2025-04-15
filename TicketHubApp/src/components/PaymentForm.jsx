@@ -12,8 +12,7 @@ function PaymentForm() {
   const [purchaseStatus, setPurchaseStatus] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const quantity = location.state?.quantity || 1; // Get quantity from the previous page (default to 1)
-
+  const quantity = location.state?.quantity || 1;
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -24,7 +23,7 @@ function PaymentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const purchaseData = { ...formData, quantity }; // Include quantity in the purchase data
+    const purchaseData = { ...formData, quantity };
     console.log("Submitting Payment Data:", purchaseData);
 
     try {
@@ -46,8 +45,6 @@ function PaymentForm() {
           creditExpire: "",
           securityCode: "",
         });
-        // Optionally navigate to a confirmation page
-        // navigate("/confirmation");
       } else {
         const errorData = await response.json();
         console.error("Payment failed:", response.status, errorData);
@@ -63,13 +60,13 @@ function PaymentForm() {
   };
 
   const handleGoBack = () => {
-    navigate("/purchase"); // Go back to the ticket information form
+    navigate("/purchase");
   };
 
   return (
     <div className="max-w-md mx-auto">
       <h1 className="mt-5 mb-3">Payment Information</h1>
-      <p className="mb-3">Review your order: {quantity} tickets.</p> {/* Display the quantity */}
+      <p className="mb-3">Review your order: {quantity} tickets.</p> 
 
       <Form onSubmit={handleSubmit}>
         <FormField

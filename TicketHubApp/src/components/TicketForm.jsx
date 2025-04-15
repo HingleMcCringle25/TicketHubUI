@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import FormField from "./FormField";
 import QuantitySelector from "./QuantitySelector";
 
@@ -16,7 +16,6 @@ function TicketForm() {
     postalCode: "",
     country: "",
   });
-  const [showPayment, setShowPayment] = useState(false);
   const navigate = useNavigate();
 
   const handleQuantityChange = (newQuantity) => {
@@ -36,87 +35,89 @@ function TicketForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="mt-5 mb-3" id="purchase-form">
-        Ticket Purchase Form
-      </h1>
-
-      <h2 className="text-xl font-semibold mb-4">Your Information</h2>
-      <Form>
-        <FormField
-          label="Name"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Email"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Phone"
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Address"
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleInputChange}
-        />
-        <div className="row">
-          <div className="col-md-6">
+    <Container className="py-5">
+      <Row className="justify-content-md-center">
+        <Col md={8} lg={6} className="bg-light p-4 rounded shadow-sm border">
+          <h1 className="text-center mb-4 text-primary">Ticket Purchase</h1>
+          <h5 className="mb-3 text-muted">Your Information</h5>
+          <Form>
             <FormField
-              label="City"
+              label="Full Name"
               type="text"
-              name="city"
-              value={formData.city}
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
             />
-          </div>
-          <div className="col-md-6">
             <FormField
-              label="Province"
-              type="text"
-              name="province"
-              value={formData.province}
+              label="Email Address"
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
             />
-          </div>
-        </div>
-        <FormField
-          label="Postal Code"
-          type="text"
-          name="postalCode"
-          value={formData.postalCode}
-          onChange={handleInputChange}
-        />
-        <FormField
-          label="Country"
-          type="text"
-          name="country"
-          value={formData.country}
-          onChange={handleInputChange}
-        />
-        <QuantitySelector
-          quantity={quantity}
-          onQuantityChange={handleQuantityChange}
-        />
+            <FormField
+              label="Phone Number"
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Street Address"
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+            />
+            <Row className="mb-3">
+              <Col md={6}>
+                <FormField
+                  label="City"
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                />
+              </Col>
+              <Col md={6}>
+                <FormField
+                  label="Province/State"
+                  type="text"
+                  name="province"
+                  value={formData.province}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
+            <FormField
+              label="Postal/Zip Code"
+              type="text"
+              name="postalCode"
+              value={formData.postalCode}
+              onChange={handleInputChange}
+            />
+            <FormField
+              label="Country"
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleInputChange}
+            />
+            <QuantitySelector
+              label="Number of Tickets"
+              quantity={quantity}
+              onQuantityChange={handleQuantityChange}
+            />
 
-        <div className="d-grid mt-4">
-            <Button variant="primary" type="button" className="w-100 mt-3" onClick={handleContinue}>
-            Continue to Payment
-            </Button>
-        </div>
-      </Form>
-    </div>
+            <div className="d-grid mt-4">
+              <Button variant="primary" type="button" className="btn-lg" onClick={handleContinue}>
+                Continue to Payment
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
