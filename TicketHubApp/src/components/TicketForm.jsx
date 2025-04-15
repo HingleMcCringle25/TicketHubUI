@@ -35,9 +35,9 @@ function TicketForm() {
   };
 
   return (
-    <Container className="py-5">
-      <Row className="justify-content-md-center">
-        <Col md={8} lg={6} className="bg-light p-4 rounded shadow-sm border">
+    <Container className="py-5 mx-auto">
+      <Row className="w-100 justify-content-md-center">
+        <Col md={12} lg={6} className="bg-light p-4 rounded shadow-sm border">
           <h1 className="text-center mb-4 text-primary">Ticket Purchase</h1>
           <h5 className="mb-3 text-muted">Your Information</h5>
           <Form>

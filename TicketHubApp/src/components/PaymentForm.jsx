@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import FormField from "./FormField";
 
@@ -13,6 +13,7 @@ function PaymentForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const quantity = location.state?.quantity || 1;
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -38,7 +39,7 @@ function PaymentForm() {
       if (response.ok) {
         setPurchaseStatus({
           success: true,
-          message: "Thank you for your purchase!",
+          message: "Payment successful! Your tickets are on their way.",
         });
         setFormData({
           creditCard: "",
@@ -50,12 +51,12 @@ function PaymentForm() {
         console.error("Payment failed:", response.status, errorData);
         setPurchaseStatus({
           success: false,
-          message: `Payment failed: ${response.statusText}`,
+          message: `Payment failed: ${response.statusText}. Please check your details.`,
         });
       }
     } catch (error) {
       console.error("Error sending payment request:", error);
-      setPurchaseStatus({ success: false, message: "Network error occurred during payment." });
+      setPurchaseStatus({ success: false, message: "Network error occurred during payment. Please try again." });
     }
   };
 
@@ -64,56 +65,64 @@ function PaymentForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="mt-5 mb-3">Payment Information</h1>
-      <p className="mb-3">Review your order: {quantity} tickets.</p> 
+    <Container className="py-5">
+      <Row className="justify-content-md-center">
+        <Col md={8} lg={6} className="bg-light p-4 rounded shadow-sm border">
+          <h1 className="text-center mb-4 text-success">Payment Information</h1>
+          <p className="mb-3 text-muted">Reviewing your order: <span className="fw-bold">{quantity}</span> tickets.</p> 
 
-      <Form onSubmit={handleSubmit}>
-        <FormField
-          label="Credit Card Number"
-          type="text"
-          name="creditCard"
-          value={formData.creditCard}
-          onChange={handleInputChange}
-        />
-        <div className="row">
-          <div className="col-md-6">
+          <Form onSubmit={handleSubmit}>
             <FormField
-              label="Expiration (MM/YY)"
+              label="Credit Card Number"
               type="text"
-              name="creditExpire"
-              value={formData.creditExpire}
+              name="creditCard"
+              value={formData.creditCard}
               onChange={handleInputChange}
             />
-          </div>
-          <div className="col-md-6">
-            <FormField
-              label="Security Code"
-              type="text"
-              name="securityCode"
-              value={formData.securityCode}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
+            <Row className="mb-3">
+              <Col md={6}>
+                <FormField
+                  label="Expiration (MM/YY)"
+                  type="text"
+                  name="creditExpire"
+                  placeholder="MM/YY"
+                  value={formData.creditExpire}
+                  onChange={handleInputChange}
+                />
+              </Col>
+              <Col md={6}>
+                <FormField
+                  label="Security Code (CVV)"
+                  type="text"
+                  name="securityCode"
+                  placeholder="CVV"
+                  value={formData.securityCode}
+                  onChange={handleInputChange}
+                />
+              </Col>
+            </Row>
 
-        <Button variant="secondary" onClick={handleGoBack} className="mt-3 me-2">
-          Go Back
-        </Button>
-        <Button variant="primary" type="submit" className="mt-3">
-          Complete Purchase
-        </Button>
+            <div className="d-flex justify-content-between mt-4">
+              <Button variant="secondary" onClick={handleGoBack}>
+                Go Back
+              </Button>
+              <Button variant="success" type="submit" className="btn-lg">
+                Complete Purchase
+              </Button>
+            </div>
 
-        {purchaseStatus && (
-          <Alert
-            variant={purchaseStatus.success ? "success" : "danger"}
-            className="mt-3"
-          >
-            {purchaseStatus.message}
-          </Alert>
-        )}
-      </Form>
-    </div>
+            {purchaseStatus && (
+              <Alert
+                variant={purchaseStatus.success ? "success" : "danger"}
+                className="mt-3"
+              >
+                {purchaseStatus.message}
+              </Alert>
+            )}
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
