@@ -24,7 +24,13 @@ function PaymentForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const purchaseData = { ...formData, quantity };
+    const concertIdAsInt = parseInt(location.state?.concertId, 10);
+    const purchaseData = {
+      ...location.state?.personalInfo,
+      ...formData,
+      quantity,
+      concertId: concertIdAsInt,
+    };
     console.log("Submitting Payment Data:", purchaseData);
 
     try {
